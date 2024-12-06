@@ -2,6 +2,7 @@ package com.dario.curso.springboot.error.springboot_error.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dario.curso.springboot.error.springboot_error.exceptions.UserNotFoundException;
 import com.dario.curso.springboot.error.springboot_error.models.domains.User;
 import com.dario.curso.springboot.error.springboot_error.services.UserService;
 
@@ -28,6 +29,9 @@ public class AppController {
     @GetMapping("/show/{id}")
     public User show(@PathVariable(name ="id") Long id) {
         User user = service.findByID(id);
+        if(user == null){
+            throw new UserNotFoundException("Error el usuario no exite");
+        }
         System.out.println(user.getLastname());
         return user;
     }   
